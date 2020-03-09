@@ -1,7 +1,10 @@
 package com.example.redisDemo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +15,15 @@ import java.util.Set;
  * @create 2020-03-07 23:28
  */
 @Service
-public class RedisService {
+public class RedisService implements MessageListener {
 
     @Autowired
     RedisTemplate redisTemplate;
 
-
+    //五种基本类型
     public String string(String key, String val) {
         redisTemplate.opsForValue().set(key, val);
-        return (String) redisTemplate.opsForValue().get(key);
+        return   (String) redisTemplate.opsForValue().get(key);
     }
 
     public String hash(String map, String key, String val) {
@@ -44,4 +47,15 @@ public class RedisService {
     }
 
 
+    //订阅与发布
+    public void publish(ChannelTopic topic, String message) {
+
+        redisTemplate.convertAndSend(topic.getTopic(), message);
+    }
+
+
+    @Override
+    public void onMessage(Message message, byte[] bytes) {
+        System.out.println("接收到的主题:" + new String(bytes) + "，接收到的内容：" + new String(message.getBody()) + "");
+    }
 }
