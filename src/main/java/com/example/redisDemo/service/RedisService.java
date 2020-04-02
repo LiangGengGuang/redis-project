@@ -21,28 +21,48 @@ public class RedisService implements MessageListener {
     RedisTemplate redisTemplate;
 
     //五种基本类型
-    public String string(String key, String val) {
+    public String setString(String key, String val) {
         redisTemplate.opsForValue().set(key, val);
-        return   (String) redisTemplate.opsForValue().get(key);
+        return "success";
     }
 
-    public String hash(String map, String key, String val) {
+    public String getString(String key) {
+        return (String) redisTemplate.opsForValue().get(key);
+    }
+
+    public String setHash(String map, String key, String val) {
         redisTemplate.opsForHash().put(map, key, val);
+        return "success";
+    }
+
+    public String getHash(String map, String key) {
         return (String) redisTemplate.opsForHash().get(map, key);
     }
 
-    public List list(String map, long key, String val) {
+    public String setList(String map, long key, String val) {
         redisTemplate.opsForList().set(map, key, val);
+        return "success";
+    }
+
+    public List getList(String map) {
         return redisTemplate.opsForList().range(map, 0, -1);
     }
 
-    public Set set(String key, String val01, String val02) {
+    public String setSet(String key, String val01, String val02) {
         redisTemplate.opsForSet().add(key, val01, val02);
+        return "success";
+    }
+
+    public Set getSet(String key) {
         return redisTemplate.opsForSet().members(key);
     }
 
-    public Set zSet(String key, String val, long num) {
+    public String setZSet(String key, String val, long num) {
         redisTemplate.opsForZSet().add(key, val, num);
+        return "success";
+    }
+
+    public Set getZSet(String key) {
         return redisTemplate.opsForZSet().range(key, 0, -1);
     }
 

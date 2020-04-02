@@ -22,32 +22,32 @@ public class RedisAction {
 
     @GetMapping("/string")
     public String string(String key, String val) {
-
-        return redisService.string(key, val);
+        redisService.setString(key, val);
+        return redisService.getString(key);
     }
 
     @GetMapping("/hash")
     public String hash(String map, String key, String val) {
-
-        return redisService.hash(map, key, val);
+        redisService.setHash(map, key, val);
+        return redisService.getHash(map, key);
     }
 
     @GetMapping("/list")
     public List list(String map, long key, String val) {
-
-        return redisService.list(map, key, val);
+        redisService.setList(map, key, val);
+        return redisService.getList(map);
     }
 
     @GetMapping("/set")
     public Set set(String key, String val01, String val02) {
-
-        return redisService.set(key, val01, val02);
+        redisService.setSet(key, val01, val02);
+        return redisService.getSet(key);
     }
 
     @GetMapping("/zset")
     public Set zSet(String key, String val, long num) {
-
-        return redisService.zSet(key, val, num);
+        redisService.setZSet(key, val, num);
+        return redisService.getZSet(key);
     }
 
 }
