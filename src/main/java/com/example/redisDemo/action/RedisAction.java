@@ -33,9 +33,9 @@ public class RedisAction {
     }
 
     @GetMapping("/list")
-    public List list(String map, long key, String val) {
-        redisService.setList(map, key, val);
-        return redisService.getList(map);
+    public List list(String key, String val) {
+        redisService.setList(key, val);
+        return redisService.getList(key);
     }
 
     @GetMapping("/set")

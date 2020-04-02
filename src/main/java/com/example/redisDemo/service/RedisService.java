@@ -39,8 +39,8 @@ public class RedisService implements MessageListener {
         return (String) redisTemplate.opsForHash().get(map, key);
     }
 
-    public String setList(String map, long key, String val) {
-        redisTemplate.opsForList().set(map, key, val);
+    public String setList(String key, String val) {
+        redisTemplate.opsForList().leftPush(key, val);
         return "success";
     }
 
